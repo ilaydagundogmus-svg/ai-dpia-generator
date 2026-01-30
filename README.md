@@ -1,26 +1,59 @@
 # AI Feature Risk & Accountability Toolkit
 
-An internal governance prototype for feature-level risk assessment and accountability in AI product development.
+An experimental prototype exploring how AI feature-level governance decisions can be structured using deterministic, principle-based logic.
 
 ---
 
 ## Overview
 
-**AI Feature Risk & Accountability Toolkit** is an internal governance prototype designed to support structured, principle-based risk and accountability assessments for AI-powered product features.
+This repository contains a lightweight governance prototype that models how AI-powered product features could be reviewed through structured internal assessment workflows.
 
-The toolkit focuses on **decision-making and documentation workflows**, rather than technical enforcement. It demonstrates how privacy, data protection, and AI-related risks can be translated into:
+The tool translates selected feature inputs (e.g. purpose, data categories, retention, automation signals) into predefined governance outcomes:
 
-- clear feature-level governance and escalation decisions,
-- documented safeguards and follow-up actions,
-- reusable accountability artefacts that support regulatory compliance and internal review.
+- **SHIP**
+- **SHIP WITH CONDITIONS**
+- **ESCALATE**
 
-The project is intentionally scoped as a **reference implementation** to illustrate how legal, product, and engineering teams can collaborate around AI governance in practice.
+The backend relies on deterministic rules. It does not perform automated legal interpretation and does not replace formal legal review.
 
 ---
 
-## Running locally
+## Purpose of the Prototype
 
-### Backend (FastAPI)
+This project is exploratory in nature. It aims to:
+
+- Experiment with operationalising GDPR-style accountability concepts  
+- Translate legal reasoning patterns into structured engineering logic  
+- Simulate internal governance workflows for AI-enabled product features  
+
+It should be understood as a conceptual prototype rather than a production-ready compliance system.
+
+---
+
+## How It Works
+
+1. A feature description and structured inputs are submitted via the UI.
+2. The FastAPI backend applies deterministic rule-based checks.
+3. Risk signals and governance themes are identified.
+4. A structured decision is generated.
+5. A Markdown-style accountability summary is produced.
+
+The system does not use machine learning and does not claim to provide authoritative legal conclusions.
+
+---
+
+## Tech Stack
+
+- **Frontend:** React (Vite, TypeScript)  
+- **Backend:** FastAPI (Python)  
+- **Assessment Logic:** Deterministic rule engine  
+- **Output:** Structured JSON + Markdown summary  
+
+---
+
+## Running Locally
+
+### Backend
 
 ```bash
 cd backend
@@ -28,10 +61,8 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
-```
 
-> If you run from the repository root, the equivalent module path is:
-> `uvicorn backend.app.main:app --reload --port 8000 --reload-dir backend`
+---
 
 ### Frontend (React / Vite)
 
@@ -44,7 +75,6 @@ npm run dev
 - **Backend**: `http://localhost:8000`
 - **Env var (optional)**: `VITE_BACKEND_URL` (defaults to `http://localhost:8000`)
 
-If the backend is not available, the UI will show **demo output** (non-blocking fallback).
 
 ---
 
@@ -127,8 +157,6 @@ ai-feature-risk-toolkit/
 └── README.md
 ```
 
-> The **React UI under `/src`** is the primary interface. The Streamlit app under `/legacy` is retained only as an early prototype reference.
-
 ---
 
 ## Technical Notes
@@ -145,22 +173,44 @@ All logic is designed to be inspectable, extendable, and suitable for internal g
 
 ---
 
-## Disclaimer
+## Limitations
 
-This project is provided as an internal governance reference and workflow support tool.
+- The rule engine is heuristic and simplified.
 
-It does not constitute legal advice and does not replace formal legal analysis, DPO review, or engagement with supervisory authorities where required. All outputs are intended to support — not substitute — professional judgment.
+- Legal reasoning is approximated through predefined patterns.
+
+- The system does not dynamically interpret legislation.
+
+- Outputs are illustrative and should not be treated as compliance advice.
 
 ---
 
+## Disclaimer
+
+This project is a conceptual governance prototype.
+It does not provide legal advice and should not be used as a compliance tool.
+It does not constitute legal advice and does not replace formal legal analysis, DPO review, or engagement with supervisory authorities where required. All outputs are intended to support - not substitute — professional judgment.
+
+---
+## Why This Project Exists
+
+AI governance discussions are often abstract.
+This prototype explores what it looks like when governance concepts are translated into code and workflow logic.
+
+It reflects an interest in the intersection of:
+
+- Public policy
+
+- Data protection law
+
+- AI governance
+
+- Product design
+
+- System architecture
+
+---
 ## License
 
 MIT License
-
-
-## Primary UI
-
-This repository’s **primary user interface** is the Figma-designed React application under `/src`.
-
-The Streamlit UI is a **legacy prototype** preserved under `/legacy` for reference and should not be treated as the product interface.
 
