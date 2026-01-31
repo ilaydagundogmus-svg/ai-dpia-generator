@@ -2,6 +2,10 @@
 
 An experimental prototype exploring how AI feature-level governance decisions can be structured using deterministic, principle-based logic.
 
+<img width="721" height="392" alt="Screenshot 2026-01-30 at 22 42 57" src="https://github.com/user-attachments/assets/44d730cc-2cf7-488d-a782-627a474af6de" />
+
+<img width="1438" height="777" alt="Screenshot 2026-01-30 at 22 43 24" src="https://github.com/user-attachments/assets/93fce1a2-3755-427f-baef-ce5214aec2e0" />
+
 ---
 
 ## Overview
