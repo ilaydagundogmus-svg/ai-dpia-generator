@@ -2,9 +2,14 @@
 
 An experimental prototype exploring how AI feature-level governance decisions can be structured using deterministic, principle-based logic.
 
-<img width="721" height="392" alt="Screenshot 2026-01-30 at 22 42 57" src="https://github.com/user-attachments/assets/44d730cc-2cf7-488d-a782-627a474af6de" />
+<p>
+  <img src="docs/screenshots/01-form-with-examples.png" alt="Input form with one-click examples" width="49%" />
+  <img src="docs/screenshots/02-result-escalate.png" alt="Result: ESCALATE decision with rationale and risk table" width="49%" />
+</p>
 
-<img width="1438" height="777" alt="Screenshot 2026-01-30 at 22 43 24" src="https://github.com/user-attachments/assets/93fce1a2-3755-427f-baef-ce5214aec2e0" />
+<p align="center">
+  <img src="docs/screenshots/03-mobile.png" alt="Mobile layout" width="24%" />
+</p>
 
 ---
 
