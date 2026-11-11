@@ -105,7 +105,7 @@ pip install -r backend/requirements.txt -r requirements-dev.txt
 python -m pytest -q tests
 ```
 
-The tests post each file in `sample_inputs/` to `/assess` and check the documented decision.
+The tests post each file in `sample_inputs/` to `/assess` and check the documented decision. Further tests cover special category data, content logging with and without training, determinism and input validation. The same tests and the frontend build run on every push through GitHub Actions (`.github/workflows/ci.yml`).
 
 ---
 
@@ -152,8 +152,10 @@ This toolkit is not intended to replace formal legal review or DPO oversight. It
 │       └── lib/             # API client, types, demo fallback
 ├── sample_inputs/           # Example feature descriptions (JSON)
 ├── tests/                   # Decision tests over the sample inputs
+├── .github/workflows/ci.yml # Tests and frontend build on every push
 ├── render.yaml              # Optional: backend deployment on Render
 ├── Guidelines.md            # Design principles for this project
+├── LICENSE                  # MIT
 └── README.md
 ```
 
