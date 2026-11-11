@@ -172,6 +172,12 @@ AI governance discussions are often abstract. This prototype explores what it lo
 
 ---
 
+## How it was built
+
+Built with AI assistance (Claude, Anthropic) as a coding and drafting tool. The goal, the governance questions and the decision outcomes are the author's; the tests were run before publishing.
+
+---
+
 ## License
 
 MIT License
