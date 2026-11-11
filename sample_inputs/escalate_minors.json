@@ -1,0 +1,9 @@
+{
+  "feature_name": "Homework helper",
+  "feature_description": "AI homework help for students.",
+  "data_subjects": ["Children"],
+  "data_categories": ["Prompt content"],
+  "processing_operations": ["Logging"],
+  "purposes": ["Product improvement"],
+  "retention": "7 days"
+}
