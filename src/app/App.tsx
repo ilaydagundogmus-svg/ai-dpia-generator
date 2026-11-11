@@ -455,7 +455,7 @@ export default function App() {
                   <div>
                     <label className="block text-[#0f172a] mb-2">Data categories</label>
                     <div className="space-y-2">
-                      {['Personal identifiers', 'Behavioral data', 'Biometric data', 'Special category data'].map((option) => (
+                      {['Personal identifiers', 'Behavioral data', 'Prompts and user content', 'Biometric data', 'Special category data'].map((option) => (
                         <label key={option} className="flex items-center">
                           <input
                             type="checkbox"
@@ -474,7 +474,7 @@ export default function App() {
                   <div>
                     <label className="block text-[#0f172a] mb-2">Processing operations</label>
                     <div className="space-y-2">
-                      {['Collection', 'Storage', 'Analysis', 'Automated decision-making'].map((option) => (
+                      {['Collection', 'Storage', 'Logging', 'Analysis', 'Automated decision-making'].map((option) => (
                         <label key={option} className="flex items-center">
                           <input
                             type="checkbox"
