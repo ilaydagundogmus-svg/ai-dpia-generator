@@ -79,7 +79,7 @@ interface Example {
 
 const EXAMPLES: Example[] = [
   {
-    label: "Abuse detection (expect: ship)",
+    label: "Abuse detection",
     featureName: "Abuse detection signals",
     featureDescription:
       "Short-lived signals used to detect spam and abuse in an assistant feature. Not used for model training.",
@@ -95,7 +95,7 @@ const EXAMPLES: Example[] = [
     crossBorder: "None",
   },
   {
-    label: "Personalised feed (expect: conditions)",
+    label: "Personalised feed",
     featureName: "Personalised content feed",
     featureDescription: "Recommends content based on past activity. Profiles are kept for a year.",
     productArea: "Recommendations",
@@ -110,7 +110,7 @@ const EXAMPLES: Example[] = [
     crossBorder: "Within EEA",
   },
   {
-    label: "Automated loan decision (expect: escalate)",
+    label: "Automated loan decision",
     featureName: "Automated loan eligibility",
     featureDescription: "Rules automatically approve or deny loan applications without human review.",
     productArea: "Lending",
@@ -125,7 +125,7 @@ const EXAMPLES: Example[] = [
     crossBorder: "None",
   },
   {
-    label: "Homework helper (expect: escalate)",
+    label: "Homework helper",
     featureName: "Homework helper",
     featureDescription: "AI homework help for school students.",
     productArea: "Education",

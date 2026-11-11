@@ -27,6 +27,17 @@ The backend uses deterministic rules. It does not use machine learning, does not
 
 ---
 
+## Problem and intended user
+
+These are working hypotheses, not validated findings.
+
+- **Intended user:** a product manager or privacy reviewer at a company that ships AI features and has to decide, before launch, whether a feature needs a deeper privacy or legal review.
+- **Problem:** reviews often start late, feature descriptions arrive incomplete, and there is no shared first-pass checklist. Product teams do not know which features need legal; reviewers spend time asking the same questions.
+- **What the tool changes:** structured intake of the facts that matter, a consistent first-pass outcome with reasons, and a written record of assumptions and open questions that reviewers can challenge.
+- **Not validated yet:** no user interviews have been done, and the thresholds are illustrative. A sensible next step is to test it with a handful of product managers and privacy reviewers and check how often its outcome matches their own judgment.
+
+---
+
 ## Why deterministic, and why three outcomes
 
 - **Explainable.** Every outcome comes with human-readable reasons, so a reviewer can see why the tool said what it said and disagree with it.
@@ -138,8 +149,7 @@ This toolkit is not intended to replace formal legal review or DPO oversight. It
 ├── src/                     # React (Vite) UI, built from a Figma Make export
 │   └── app/
 │       ├── App.tsx
-│       ├── lib/             # API client, types, demo fallback
-│       └── components/ui-kit/   # Reusable UI components (shadcn/ui)
+│       └── lib/             # API client, types, demo fallback
 ├── sample_inputs/           # Example feature descriptions (JSON)
 ├── tests/                   # Decision tests over the sample inputs
 ├── render.yaml              # Optional: backend deployment on Render

@@ -1,5 +1,7 @@
 # Guidelines
 
+> **Status note.** This file mixes principles that the code follows today with a planned architecture. Implemented: deterministic rule-based logic, Pydantic schemas, human-readable reasons and `matched_on` fields, Markdown output, tests over sample inputs. **Not implemented yet:** separate `rules.py` / `risk_engine.py` modules, YAML risk files under `data/`, timestamps in the Markdown output. The current UI is React (`src/`), not Streamlit. Today all rules and thresholds live in `backend/app/main.py`.
+
 System Guidelines for AI Feature Risk & Accountability Toolkit
 
 ---
@@ -49,7 +51,7 @@ System Guidelines for AI Feature Risk & Accountability Toolkit
 
 ---
 
-# YAML Data Files
+# YAML Data Files (planned, not implemented)
 
 * Use clear, consistent structure across all YAML files
 * Risk definitions should include:
@@ -81,7 +83,7 @@ System Guidelines for AI Feature Risk & Accountability Toolkit
 
 ---
 
-# UI Guidelines (Streamlit)
+# UI Guidelines (original Streamlit plan; current UI is React)
 
 * Keep the interface **simple and focused** - this is a governance tool, not a consumer app
 * Use clear labels and help text for all inputs
