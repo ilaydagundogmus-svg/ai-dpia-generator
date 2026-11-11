@@ -1,0 +1,11 @@
+{
+  "feature_name": "Automated loan eligibility",
+  "feature_description": "Model-free rules automatically approve or deny loan applications.",
+  "product_area": "Lending",
+  "data_subjects": ["Adult users"],
+  "data_categories": ["Financial data"],
+  "processing_operations": ["Automated decision-making"],
+  "purposes": ["Eligibility"],
+  "lawful_basis_candidate": "Contract",
+  "retention": "90 days"
+}

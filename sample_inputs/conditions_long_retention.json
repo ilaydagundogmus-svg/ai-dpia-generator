@@ -1,0 +1,11 @@
+{
+  "feature_name": "Chat history for support",
+  "feature_description": "Stores support chat transcripts for agents.",
+  "product_area": "Customer support",
+  "data_subjects": ["Adult users"],
+  "data_categories": ["Contact details"],
+  "processing_operations": ["Storage"],
+  "purposes": ["Customer support"],
+  "lawful_basis_candidate": "Contract",
+  "retention": "12 months"
+}

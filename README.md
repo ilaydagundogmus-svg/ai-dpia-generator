@@ -10,48 +10,50 @@ An experimental prototype exploring how AI feature-level governance decisions ca
 
 ## Overview
 
-This repository contains a lightweight governance prototype that models how AI-powered product features could be reviewed through structured internal assessment workflows.
-
-The tool translates selected feature inputs (e.g. purpose, data categories, retention, automation signals) into predefined governance outcomes:
+A small governance prototype that models how an AI-powered product feature could be reviewed before launch. You describe a feature (purpose, data categories, retention, automation, vendors, transfers) and the tool returns one of three gating outcomes with reasons:
 
 - **SHIP**
 - **SHIP WITH CONDITIONS**
 - **ESCALATE**
 
-The backend relies on deterministic rules. It does not perform automated legal interpretation and does not replace formal legal review.
+It also returns the risks it matched, the conditions or follow-ups it expects, and a Markdown summary that a product, engineering or legal reviewer can read and challenge.
+
+The backend uses deterministic rules. It does not use machine learning, does not interpret legislation and does not replace legal review or a DPO.
 
 ---
 
-## Purpose of the Prototype
+## Why deterministic, and why three outcomes
 
-This project is exploratory in nature. It aims to:
+- **Explainable.** Every outcome comes with human-readable reasons, so a reviewer can see why the tool said what it said and disagree with it.
+- **Predictable.** The same input always gives the same answer, which makes the logic testable (see `tests/`).
+- **Three outcomes mirror a real review.** Ship, ship with safeguards, or send to people with the authority to decide. The tool does not try to be the decision-maker for the hard cases.
 
-- Experiment with operationalising GDPR-style accountability concepts  
-- Translate legal reasoning patterns into structured engineering logic  
-- Simulate internal governance workflows for AI-enabled product features  
+Escalation triggers in the current rules: children among data subjects; special category data (including proxies such as biometric or health data); automated decisions with indicators of significant effects. Everything else is SHIP or SHIP WITH CONDITIONS, depending on retention, purpose fit, matched risks and open conditions.
 
-It should be understood as a conceptual prototype rather than a production-ready compliance system.
+The 30-day retention threshold and the list of "acceptable" purposes are illustrative choices in the code, not legal requirements.
 
 ---
 
 ## How It Works
 
 1. A feature description and structured inputs are submitted via the UI.
-2. The FastAPI backend applies deterministic rule-based checks.
-3. Risk signals and governance themes are identified.
-4. A structured decision is generated.
-5. A Markdown-style accountability summary is produced.
+2. The FastAPI backend (`POST /assess`) applies rule-based checks (`backend/app/main.py`).
+3. Risks are matched and scored against GDPR principles such as purpose limitation, storage limitation and transparency.
+4. A gating decision, reasons and conditions are produced.
+5. A Markdown summary is rendered: decision, feature overview, assumptions, decision rationale, conditions, identified risks and open questions or follow-ups.
 
-The system does not use machine learning and does not claim to provide authoritative legal conclusions.
+If the backend is not reachable, the UI shows a clearly labelled warning that the result is a fixed demo sample and was not computed from the input.
+
+The UI has four one-click examples (ship, conditions, two escalations) so a new user can see a result without filling in the form, a "How decisions are made" page, and a layout that works on phones.
 
 ---
 
 ## Tech Stack
 
-- **Frontend:** React (Vite, TypeScript)  
-- **Backend:** FastAPI (Python)  
-- **Assessment Logic:** Deterministic rule engine  
-- **Output:** Structured JSON + Markdown summary  
+- **Frontend:** React (Vite, TypeScript, Tailwind)
+- **Backend:** FastAPI (Python), Pydantic schemas
+- **Assessment logic:** deterministic rule engine in `backend/app/main.py`
+- **Output:** structured JSON + Markdown summary
 
 ---
 
@@ -65,156 +67,111 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
+```
 
----
-
-### Frontend (React / Vite)
+### Frontend
 
 ```bash
 npm install
 npm run dev
 ```
 
-- **Frontend**: `http://localhost:5173`
-- **Backend**: `http://localhost:8000`
-- **Env var (optional)**: `VITE_BACKEND_URL` (defaults to `http://localhost:8000`)
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:8000` (health check: `/health`)
+- Optional env var: `VITE_BACKEND_URL` (defaults to `http://localhost:8000`)
 
+### Tests
+
+From the repository root:
+
+```bash
+pip install -r backend/requirements.txt -r requirements-dev.txt
+python -m pytest -q tests
+```
+
+The tests post each file in `sample_inputs/` to `/assess` and check the documented decision.
+
+---
+
+## Hosted demo (optional)
+
+The frontend is static and the backend is a small FastAPI app, so a demo can be hosted for free:
+
+1. **Backend:** deploy `backend/` as a web service (a `render.yaml` is included for Render). Set `ALLOWED_ORIGINS` to the frontend URL.
+2. **Frontend:** deploy the repository root as a Vite site (Vercel, Netlify or Render static). Build command `npm run build`, output `dist`. Set `VITE_BACKEND_URL` to the backend URL.
+
+Free tiers sleep when idle, so the first request after a pause can take about a minute.
 
 ---
 
 ## Purpose and Scope
 
-This toolkit is not intended to replace formal legal review or DPO oversight.
+This toolkit is not intended to replace formal legal review or DPO oversight. It is an internal support tool to:
 
-Instead, it serves as an internal support mechanism to:
-
-- surface legal and governance risks early in feature design,
-- structure discussions between product, engineering, and compliance teams,
-- operationalise GDPR accountability requirements in a scalable and repeatable way.
-
-The emphasis is on **legal reasoning, explainability, and governance maturity**, not on automation for its own sake.
-
-In this sense, the toolkit operationalises the GDPR accountability principle by ensuring that key design decisions, assumptions, and safeguards are explicitly recorded, reviewable, and attributable.
+- surface governance risks early in feature design,
+- structure discussions between product, engineering and compliance teams,
+- make assumptions and open questions explicit and reviewable.
 
 ---
 
-## Key Capabilities
+## What the tool handles
 
-- **Feature-Level Gating Decisions**  
-  Structured SHIP / SHIP-WITH-CONDITIONS / ESCALATE logic based on risk patterns, safeguards, and unresolved uncertainties.
-
-- **Principle-Based Risk Reasoning**  
-  Assessments are grounded in GDPR principles such as purpose limitation, data minimisation, transparency, security, and accountability, rather than checkbox compliance.
-
-- **AI-Specific Risk Patterns**  
-  Built-in handling of common AI risks, including:
-  - prompt and interaction logging,
-  - model training on user-provided content,
-  - profiling and automated decision-making,
-  - model memorisation and re-identification risks,
-  - cross-border data flows and vendor involvement.
-
-- **Accountability Documentation Outputs**  
-  Automated generation of structured documentation artefacts, including:
-  - DPIA-style assessment skeletons,
-  - RoPA-style processing summaries,
-  - mini legitimate interest assessments (where applicable),
-  - DSAR readiness checklists.
-
-- **Operational Follow-Ups**  
-  Clear identification of required legal, product, and engineering follow-ups, such as transparency updates, retention limits, vendor contract reviews, or escalation triggers.
-
-- **Explainability by Design**  
-  All decisions are rule-based and human-readable, supporting auditability, internal challenge, and supervisory authority expectations.
-
----
-
-## Governance-Oriented Design
-
-The toolkit reflects a governance-first approach to AI product development:
-
-- Risk is treated as a **decision input**, not a post-hoc compliance exercise.
-- Documentation is generated as a **by-product of decision-making**, not as an afterthought.
-- Legal requirements are translated into **operational constraints and conditions**, enabling faster and more informed product iteration.
-
-This design mirrors how mature in-house teams manage AI-related regulatory risk in fast-moving environments.
+- **Feature-level gating** with SHIP / SHIP WITH CONDITIONS / ESCALATE.
+- **AI-specific risk patterns:** prompt and content logging, reuse of user content for model training, automated decision-making, vendor involvement, cross-border transfers.
+- **Conditions and follow-ups** such as retention limits, transparency updates, vendor review or human oversight.
+- **Explainability by design:** every decision lists its reasons.
 
 ---
 
 ## Project Structure
 
 ```
-ai-feature-risk-toolkit/
-├── src/                     # Primary UI (React / Vite, Figma-based)
+.
+├── backend/
+│   ├── app/main.py          # FastAPI app and the deterministic rule engine
+│   └── requirements.txt
+├── src/                     # React (Vite) UI, built from a Figma Make export
 │   └── app/
-│       └── components/
-│           └── ui-kit/       # Reusable UI components (not a separate app)
-├── legacy/
-│   └── streamlit_app.py      # Legacy Streamlit prototype (kept for reference)
-├── backend/                  # Reserved for backend services (optional)
-├── data/
-│   ├── risks.yaml
-│   ├── dpa_playbook.yaml
-│   └── training_snippets.yaml
-├── sample_inputs/
-├── tests/
+│       ├── App.tsx
+│       ├── lib/             # API client, types, demo fallback
+│       └── components/ui-kit/   # Reusable UI components (shadcn/ui)
+├── sample_inputs/           # Example feature descriptions (JSON)
+├── tests/                   # Decision tests over the sample inputs
+├── render.yaml              # Optional: backend deployment on Render
+├── Guidelines.md            # Design principles for this project
 └── README.md
 ```
 
 ---
 
-## Technical Notes
-
-The implementation prioritises clarity and explainability over technical sophistication.
-
-- **Backend**: Python (FastAPI) with deterministic, rule-based assessment logic (principle-based mapping; automation nuance handled via inferred “significant effects” triggers)  
-- **Risk & Policy Packs**: YAML-based libraries for risks, mitigations, and governance playbooks  
-- **Documentation**: Markdown outputs designed for legal review and auditability  
-- **UI (primary)**: React (Vite) frontend under `/src` (Figma-based)  
-- **UI (legacy)**: Streamlit prototype under `/legacy` (kept for reference)
-
-All logic is designed to be inspectable, extendable, and suitable for internal governance use.
-
----
-
 ## Limitations
 
-- The rule engine is heuristic and simplified.
+- The rule engine is heuristic and simplified; rules and thresholds are hardcoded in one file.
+- Inference from free text (training/reuse, significant effects) relies on keyword matching and can miss or over-trigger.
+- It does not generate full DPIA, RoPA or legitimate-interest documents. It produces a short assessment summary only.
+- It does not interpret legislation. Outputs are illustrative and are not compliance advice.
 
-- Legal reasoning is approximated through predefined patterns.
+## Possible next steps
 
-- The system does not dynamically interpret legislation.
-
-- Outputs are illustrative and should not be treated as compliance advice.
+- Move rules, thresholds and risk descriptions into data files so legal reviewers can edit them without touching code.
+- Add more test cases per rule, including edge cases for the keyword inference.
+- Generate DPIA-style skeleton sections from the matched risks.
+- Collect feedback from privacy and product reviewers on which outcomes they would change.
 
 ---
 
 ## Disclaimer
 
-This project is a conceptual governance prototype.
-It does not provide legal advice and should not be used as a compliance tool.
-It does not constitute legal advice and does not replace formal legal analysis, DPO review, or engagement with supervisory authorities where required. All outputs are intended to support - not substitute — professional judgment.
+This project is a conceptual governance prototype. It does not provide legal advice and should not be used as a compliance tool. It does not replace formal legal analysis, DPO review or engagement with supervisory authorities where required.
 
 ---
+
 ## Why This Project Exists
 
-AI governance discussions are often abstract.
-This prototype explores what it looks like when governance concepts are translated into code and workflow logic.
-
-It reflects an interest in the intersection of:
-
-- Public policy
-
-- Data protection law
-
-- AI governance
-
-- Product design
-
-- System architecture
+AI governance discussions are often abstract. This prototype explores what it looks like when governance concepts are translated into code and workflow logic. It reflects an interest in the intersection of public policy, data protection law, AI governance, product design and system architecture.
 
 ---
+
 ## License
 
 MIT License
-

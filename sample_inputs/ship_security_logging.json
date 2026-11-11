@@ -1,0 +1,14 @@
+{
+  "feature_name": "Abuse detection logging",
+  "feature_description": "Short-lived logs of user prompts to detect abuse. Logs are not used for model training.",
+  "product_area": "Trust & Safety",
+  "jurisdictions": ["EU"],
+  "data_subjects": ["Adult users"],
+  "data_categories": ["Prompt content"],
+  "processing_operations": ["Logging"],
+  "purposes": ["Safety & security"],
+  "lawful_basis_candidate": "Legitimate interests",
+  "retention": "14 days",
+  "vendors_involved": false,
+  "cross_border_transfers": "None"
+}

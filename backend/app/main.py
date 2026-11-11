@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import re
 from typing import Dict, List, Optional, Tuple
 
@@ -47,10 +48,13 @@ class AssessmentResponse(BaseModel):
 
 app = FastAPI(title="AI Feature Risk & Accountability Toolkit (Backend)")
 
-# Dev-only CORS for local Vite frontend
+# CORS: local Vite frontend by default. For a hosted demo, set ALLOWED_ORIGINS
+# to a comma-separated list, e.g. "https://my-demo.vercel.app".
+_origins = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
